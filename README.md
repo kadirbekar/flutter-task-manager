@@ -30,6 +30,7 @@ Flavor environment set up. To use flavors: <br><br>
  git clone https://github.com/kadirbekar/flutter-task-manager.git<br>
  cd flutter-task-manager<br>
  cd back_end<br>
+ npm i<br>
  nodemon start<br>
       
 Sources : 
