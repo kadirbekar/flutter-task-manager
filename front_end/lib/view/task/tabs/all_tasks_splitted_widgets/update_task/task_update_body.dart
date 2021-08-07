@@ -93,8 +93,7 @@ class _UpdateTaskBottomSheetBodyState extends State<UpdateTaskBottomSheetBody> {
       processDate: DateTime.now().toString(),
       status: taskStatus
     );
-    _taskController.titleController.clear();
-    _taskController.contentController.clear();
+    _taskController.clearTextEditingControllerValues();
     _taskController.updateTheTaskFromLocalList(_taskController.willBeUpdatedTask);
     await _taskController.updateTaskById(_taskController.willBeUpdatedTask);
   }

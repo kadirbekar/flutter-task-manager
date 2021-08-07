@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import '../../constants/design_constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
+
   final TextEditingController? controller;
   final String? hintText;
   final Widget? prefixIcon;
-  final Function(String)? validator;
+  final String? Function(String?)? validator;
   final int? maxLine;
   final int? maxLenght;
   final TextInputAction? textInputAction;
+  final AutovalidateMode? autovalidateMode;
 
   const CustomTextFormField({
     Key? key,
@@ -19,7 +21,8 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.maxLine,
     this.maxLenght,
-    this.textInputAction
+    this.textInputAction,
+    this.autovalidateMode
   }) : super(key: key);
 
   @override
@@ -35,6 +38,8 @@ class CustomTextFormField extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: TextFormField(
+        autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
+        validator: validator,
         maxLength: this.maxLenght,
         maxLines: this.maxLine ?? 1,
         textInputAction: textInputAction ?? TextInputAction.done,
@@ -53,7 +58,7 @@ class CustomTextFormField extends StatelessWidget {
           border: _outlineInputBorder,
           errorBorder: _outlineInputBorder,
           errorStyle: TextStyle(
-            color: Colors.black,
+            color: Colors.red,
           ),
         ),
       ),

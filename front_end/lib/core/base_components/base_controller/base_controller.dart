@@ -22,4 +22,7 @@ abstract class IBaseController extends GetxController {
 
   /// This method updates completed task list on local
   fillCompletedTasksOnLocal();
+
+  //  This method clears text editing controller values.
+  clearTextEditingControllerValues();
 }

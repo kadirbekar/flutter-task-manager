@@ -50,10 +50,13 @@ class _TaskPageState extends State<TaskPage> with SingleTickerProviderStateMixin
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: CustomFloatingActionButton(
-            onPressed: () => CustomBottomSheet.instance.displayBottomSheet(
-              context: context,
-              child: AddNewTaskBody(taskController: _taskController),
-            ),
+            onPressed: () {
+              _taskController.clearTextEditingControllerValues();
+              CustomBottomSheet.instance.displayBottomSheet(
+                context: context,
+                child: AddNewTaskBody(taskController: _taskController),
+              );
+            },
             iconData: Icons.add,
           ),
         ),

@@ -34,9 +34,9 @@ class TaskController extends IBaseController with ITaskRepository {
   late AddedTaskResponseModel _addedTaskResponse;
   AddedTaskResponseModel get addedTaskResponse => _addedTaskResponse;
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController titleController = TextEditingController();
-  TextEditingController contentController = TextEditingController();
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  late final TextEditingController titleController;
+  late final TextEditingController contentController;
 
   late Task willBeUpdatedTask;
   late CreateTaskRequestModel willBeAddedTask;
@@ -48,6 +48,8 @@ class TaskController extends IBaseController with ITaskRepository {
     super.onInit();
     fetchAllTasks();
     _platformEnvironmentResponse = PlatformEnvironmentResponseModel();
+    titleController = TextEditingController();
+    contentController = TextEditingController();
     _updatedTaskResponseModel = UpdateTaskResponseModel();
     _deletedTaskResponse = TaskResponseModel();
     willBeUpdatedTask = Task();
@@ -99,6 +101,12 @@ class TaskController extends IBaseController with ITaskRepository {
   fillCompletedTasksOnLocal() {
     _completedTasks.data?.clear();
     _completedTasks.data = _allTasks.data?.where((element) => element.status == "Done").toList();
+  }
+
+  @override
+  clearTextEditingControllerValues() {
+    titleController.clear();
+    contentController.clear();
   }
 
   @override
