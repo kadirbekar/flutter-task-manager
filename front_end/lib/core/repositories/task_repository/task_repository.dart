@@ -25,7 +25,7 @@ class TaskRepository with BaseTaskRepository {
   final String _fetchPlatformEnvironmentPath = "fetchPlatformEnvironment";
 
   @override
-  Future<TaskResponseModel> fetchAllTasks() async {
+  fetchAllTasks() async {
     final _allTasksResponse = await _networkManager.send<TaskResponseModel,TaskResponseModel>(
       "/$_taskRequestPath/$_fetchAllTasksPath", 
       parseModel: TaskResponseModel(), 
@@ -35,7 +35,7 @@ class TaskRepository with BaseTaskRepository {
   }
 
   @override
-  Future<UpdateTaskResponseModel> updateTaskById(Task task) async {
+  updateTaskById(Task task) async {
     final _updatedTaskResponse = await _networkManager.send<UpdateTaskResponseModel, UpdateTaskResponseModel>(
       "/$_taskRequestPath/$_updateTaskByIdPath/${task.id}",
       parseModel: UpdateTaskResponseModel(),
@@ -47,7 +47,7 @@ class TaskRepository with BaseTaskRepository {
   }
 
   @override
-  Future<TaskResponseModel?> deleteTaskById(String taskId) async {
+  deleteTaskById(String taskId) async {
     final _deletedTaskResponse = await _networkManager.send<TaskResponseModel, TaskResponseModel>(
       "/$_taskRequestPath/$_deleteTaskByIdPath/$taskId", 
       parseModel: TaskResponseModel(), 
@@ -58,7 +58,7 @@ class TaskRepository with BaseTaskRepository {
   }
 
   @override
-  Future<AddedTaskResponseModel?> createTask(CreateTaskRequestModel task) async {
+  createTask(CreateTaskRequestModel task) async {
     final _addedTaskResponse = await _networkManager.send<AddedTaskResponseModel, AddedTaskResponseModel>(
       "/$_taskRequestPath/$_createTaskPath", 
       parseModel: AddedTaskResponseModel(), 
@@ -70,7 +70,7 @@ class TaskRepository with BaseTaskRepository {
   }
 
   @override
-  Future<PlatformEnvironmentResponseModel> fetchPlatformEnvironmentData() async {
+  fetchPlatformEnvironmentData() async {
     final _platformEnvironmentResponse = await _networkManager.send<PlatformEnvironmentResponseModel, PlatformEnvironmentResponseModel>(
       "/$_taskRequestPath/$_fetchPlatformEnvironmentPath",
       parseModel: PlatformEnvironmentResponseModel(), 

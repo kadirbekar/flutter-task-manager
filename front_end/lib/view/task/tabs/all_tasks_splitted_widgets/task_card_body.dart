@@ -15,9 +15,9 @@ class TaskCardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      init: TaskController(),
-      builder: (TaskController taskController) {
+    final TaskController _taskController = Get.find();
+    return Obx(() {
+      if(!_taskController.isStateBusy.value) {
         return Card(
           color: TaskCardBackGroundColor.value(task?.status ?? "ToDo"),
           elevation: 0,
@@ -28,7 +28,9 @@ class TaskCardBody extends StatelessWidget {
             textColor: Colors.white,
           ),
         );
-      },
-    );
+      } else {
+        return SizedBox.shrink();
+      }
+    });
   }
 }

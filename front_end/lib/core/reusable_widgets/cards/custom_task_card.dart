@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_nodejs_task_manager/view/task/controller/task_controller.dart';
 
-import '../../../view/task/controller/task_controller.dart';
 import '../../../view/task/tabs/all_tasks_splitted_widgets/task_card_body.dart';
 import '../../../view/task/tabs/all_tasks_splitted_widgets/task_card_footer.dart';
 import '../../../view/task/tabs/all_tasks_splitted_widgets/update_task/task_update_body.dart';
@@ -22,6 +22,7 @@ class CustomTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TaskController _taskController = Get.find();
 
     final _titleOfTheTask = Align(
       alignment: Alignment.centerLeft,
@@ -35,37 +36,39 @@ class CustomTaskCard extends StatelessWidget {
       ),
     );
 
-    return GestureDetector(
-      onTap: () => CustomBottomSheet.instance.displayBottomSheet(context: context, child: UpdateTaskBottomSheetBody(task: task!)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: DesignConstants.instance.borderRadiusCircular,
-          ),
-          elevation: 4,
-          child: ClipRRect(
-            borderRadius: DesignConstants.instance.borderRadiusCircular,
-            child: GetBuilder<TaskController>(
-              init: TaskController(),
-              builder: (TaskController taskController) {
-                return Card(
-                  color: TaskCardBackGroundColor.value(task?.status ?? "ToDo"),
-                  child: Column(
-                    children: [
-                      _titleOfTheTask,
-                      context.lowHeightSpace,
-                      TaskCardBody(task: task),
-                      context.lowHeightSpace,
-                      TaskCardFooter(task: task)
-                    ],
+    return Obx((){
+      if(!_taskController.isStateBusy.value) {
+        return GestureDetector(
+          onTap: () => CustomBottomSheet.instance.displayBottomSheet(context: context, child: UpdateTaskBottomSheetBody(task: task!)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Material(
+              shape: RoundedRectangleBorder(
+                borderRadius: DesignConstants.instance.borderRadiusCircular,
+              ),
+              elevation: 4,
+              child: ClipRRect(
+                borderRadius: DesignConstants.instance.borderRadiusCircular,
+                child: Card(
+                    color: TaskCardBackGroundColor.value(task?.status ?? "ToDo"),
+                    child: Column(
+                      children: [
+                        _titleOfTheTask,
+                        context.lowHeightSpace,
+                        TaskCardBody(task: task),
+                        context.lowHeightSpace,
+                        TaskCardFooter(task: task)
+                      ],
+                    ),
                   ),
-                );
-              },
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        } else {
+          return SizedBox.shrink();
+        }
+      },
     );
   }
 }

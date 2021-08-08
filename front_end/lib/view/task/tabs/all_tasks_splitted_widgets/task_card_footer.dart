@@ -15,37 +15,43 @@ class TaskCardFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TaskController _taskController = Get.find();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Obx((){
+      if(!_taskController.isStateBusy.value) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _PageSpecificText(text: "Date : ${Jiffy(task?.processDate).format("yyyy-MM-dd, h:mm:ss a")}"),
-              _PageSpecificText(text: "Status : ${task?.status}")
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _PageSpecificText(text: "Date : ${Jiffy(task?.processDate).format("yyyy-MM-dd, h:mm:ss a")}"),
+                  _PageSpecificText(text: "Status : ${task?.status}")
+                ],
+              ),
+              if(task?.status == "Done") ...{
+                context.lowHeightSpace,
+                CustomTextButton(
+                  edgeInsets: const EdgeInsets.all(0),
+                  buttonText: "Delete Task",
+                  textColor: Colors.black,
+                  buttonStyle: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white)
+                  ),
+                  onPressed: () async {
+                    _taskController.removeTheTaskFromLocalList(task!);
+                    _taskController.clearTextEditingControllerValues();
+                    await _taskController.deleteTaskById("${task?.id}");
+                  }
+                )
+              }
             ],
           ),
-          if(task?.status == "Done") ...{
-            context.lowHeightSpace,
-            CustomTextButton(
-              edgeInsets: const EdgeInsets.all(0),
-              buttonText: "Delete Task",
-              textColor: Colors.black,
-              buttonStyle: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white)
-              ),
-              onPressed: () async {
-                _taskController.removeTheTaskFromLocalList(task!);
-                _taskController.clearTextEditingControllerValues();
-                await _taskController.deleteTaskById("${task?.id}");
-              }
-            )
-          }
-        ],
-      ),
-    );
+        );
+      } else {
+        return SizedBox.shrink();
+      }
+    });
   }
 }
 

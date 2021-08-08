@@ -27,7 +27,6 @@ class TaskManager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      darkTheme: ThemeData.dark(),
       theme: ThemeData(
         fontFamily: GoogleFonts.ubuntu().fontFamily,
       ),

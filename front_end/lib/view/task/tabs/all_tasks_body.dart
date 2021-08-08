@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/constants/image_constants.dart';
-import '../../../core/enums/view_state.dart';
 import '../../../core/reusable_widgets/cards/custom_task_card.dart';
 import '../../../core/reusable_widgets/general_purpose_widgets/circular_progress_bar.dart';
 import '../../../core/reusable_widgets/general_purpose_widgets/empty_body_message_widget.dart';
-import '../../../core/reusable_widgets/texts/error_text.dart';
 import '../controller/task_controller.dart';
 
 class AllTasksBody extends StatelessWidget {
@@ -25,30 +23,26 @@ class AllTasksBody extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: Colors.blueGrey.withOpacity(.1),
-        child: GetBuilder<TaskController>(
-          init: TaskController(),
-          builder: (taskController) {
-            if (taskController.viewState == ViewState.Initial) {
-              return SizedBox.shrink();
-            } else if (taskController.viewState == ViewState.Busy) {
-              return CustomCircularProgressBar();
-            } else if (taskController.viewState == ViewState.Idle) {
-              return _taskController.allTasks.data?.length != 0 ? ListView.builder(
-                itemBuilder: (context, index) {
+        child: Obx(() {
+          if(_taskController.isStateBusy.value) {
+            return const CustomCircularProgressBar();
+          } else if(_taskController.allTasks.value.data?.length != 0) {
+            return ListView.builder(
+                itemCount: _taskController.allTasks.value.data?.length,
+                itemBuilder: (BuildContext context, int index) {
                   return CustomTaskCard(
-                    key: ValueKey(_taskController.allTasks.data![index].id),
-                    task: _taskController.allTasks.data![index],
+                    key: ValueKey(_taskController.allTasks.value.data![index].id),
+                    task: _taskController.allTasks.value.data![index],
                   );
-                },
-                itemCount: _taskController.allTasks.data?.length,
-              ) : _emptyBodyMessageWidget;
-            } else if (taskController.viewState == ViewState.Error) {
-              return const CustomErrorText();
-            } else {
-              return SizedBox.shrink();
-            }
-          },
-        ),
+                }
+              );
+          } else if(_taskController.allTasks.value.data?.length == 0) {
+            return _emptyBodyMessageWidget;
+          }
+          else {
+            return SizedBox.shrink();
+          }
+        }),
       ),
     );
   }
