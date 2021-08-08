@@ -2,10 +2,10 @@
 Task manager application which uses Flutter and Node.js.<br><br>
 **If interested, you should check the notes below the images**
 
-![all_tasks](https://user-images.githubusercontent.com/34074484/127744892-8482ef38-d876-47dc-b5d1-5e9784aba0e1.png)
-![completed_tasks](https://user-images.githubusercontent.com/34074484/127744893-fbe3edfb-a379-41d8-b648-a7b94ca14b12.png)
-![add_new_task](https://user-images.githubusercontent.com/34074484/127744888-60400a18-5d99-43a0-8605-df2e489ecb1b.png)
-![update_the_task](https://user-images.githubusercontent.com/34074484/127744894-0104ef47-55ef-4c50-ba0b-007d74b22bda.png) <br><br>
+![all_tasks](https://user-images.githubusercontent.com/34074484/128631599-75035489-5873-4cd7-b4e5-f627c7c7b8e3.png)
+![completed_tasks](https://user-images.githubusercontent.com/34074484/128631600-04692840-6aa2-45d9-b91c-e6cd4bf4654a.png)<br>
+![add_new_task](https://user-images.githubusercontent.com/34074484/128631596-4ff1ee9c-b2bd-4668-a769-d94b744244c5.png)
+![update_task](https://user-images.githubusercontent.com/34074484/128631602-78c34fe0-bb94-4d57-9d65-a27dce8f3f21.png)<br>
 
 Back-end: <br>
   - Express.js, Mongoose, Joi
