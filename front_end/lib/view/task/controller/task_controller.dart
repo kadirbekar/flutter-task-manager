@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../../core/base_components/base_controller/base_controller.dart';
 import '../../../core/common_methods/display_snackbar.dart';
 import '../../../core/enums/view_state.dart';
 import '../../../core/models/request/task/create_task_model.dart';
@@ -9,16 +9,17 @@ import '../../../core/models/response/base_model/task_model.dart';
 import '../../../core/models/response/environment/base_environment_model.dart';
 import '../../../core/models/response/task/added_task/added_task_model.dart';
 import '../../../core/models/response/task/updated_task/update_task_model.dart';
-import '../../../core/repositories/task_repository/ITaskRepository.dart';
+import '../../../core/repositories/task_repository/base_task_repository.dart';
 import '../../../core/repositories/task_repository/task_repository.dart';
 import '../../../locator.dart';
-class TaskController extends IBaseController with ITaskRepository {
+import 'base_task_controller.dart';
+class TaskController extends BaseTaskController with BaseTaskRepository {
 
   final TaskRepository _taskRepository = locator.get<TaskRepository>();
 
   TaskResponseModel _allTasks = TaskResponseModel();
   TaskResponseModel get allTasks => _allTasks;
-
+  
   late TaskResponseModel _completedTasks;
   TaskResponseModel get completedTasks => _completedTasks;
 
@@ -34,12 +35,20 @@ class TaskController extends IBaseController with ITaskRepository {
   late AddedTaskResponseModel _addedTaskResponse;
   AddedTaskResponseModel get addedTaskResponse => _addedTaskResponse;
 
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  late final TextEditingController titleController;
-  late final TextEditingController contentController;
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKey => _formkey;
 
-  late Task willBeUpdatedTask;
-  late CreateTaskRequestModel willBeAddedTask;
+  late final TextEditingController _titleController;
+  TextEditingController get titleController => _titleController;
+
+  late final TextEditingController _contentController;
+  TextEditingController get contentController => _contentController;
+
+  late Task _willBeUpdatedTask;
+  Task get willBeUpdatedTask => _willBeUpdatedTask;
+
+  late CreateTaskRequestModel _willBeAddedTask;
+  CreateTaskRequestModel get willBeAddedTask => _willBeAddedTask;
 
   final int _elementNotFoundIndex = -1;
 
@@ -48,12 +57,12 @@ class TaskController extends IBaseController with ITaskRepository {
     super.onInit();
     fetchAllTasks();
     _platformEnvironmentResponse = PlatformEnvironmentResponseModel();
-    titleController = TextEditingController();
-    contentController = TextEditingController();
+    _titleController = TextEditingController();
+    _contentController = TextEditingController();
     _updatedTaskResponseModel = UpdateTaskResponseModel();
     _deletedTaskResponse = TaskResponseModel();
-    willBeUpdatedTask = Task();
-    willBeAddedTask = CreateTaskRequestModel();
+    _willBeUpdatedTask = Task();
+    _willBeAddedTask = CreateTaskRequestModel();
     _completedTasks = TaskResponseModel();
   }
 
@@ -107,6 +116,37 @@ class TaskController extends IBaseController with ITaskRepository {
   clearTextEditingControllerValues() {
     titleController.clear();
     contentController.clear();
+  }
+
+  @override
+  createNewTaskModel({@required String? status}) async { 
+   if(_formkey.currentState?.validate() ?? false) {
+      Get.back();
+      _willBeAddedTask  = CreateTaskRequestModel(
+        title: titleController.text,
+        content: contentController.text,
+        status: status
+      );
+      await createTask(willBeAddedTask);
+      clearTextEditingControllerValues();
+    }
+  }
+  
+  @override
+  createUpdateTaskModel({@required String? taskId, @required String? status}) async {
+    if(_formkey.currentState?.validate() ?? false) {
+      Get.back();
+      _willBeUpdatedTask = Task(
+        id: taskId!,
+        title: titleController.text,
+        content: contentController.text,
+        processDate: DateTime.now().toString(),
+        status: status
+      );
+      clearTextEditingControllerValues();
+      updateTheTaskFromLocalList(willBeUpdatedTask);
+      await updateTaskById(willBeUpdatedTask);
+    }
   }
 
   @override

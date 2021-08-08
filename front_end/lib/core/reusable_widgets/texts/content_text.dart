@@ -20,18 +20,22 @@ class ContentText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final double _textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
-    return Tooltip(
-      message: text ?? "",
-      child: Text(
-        text ?? "",
-        style: textStyle ?? TextStyle(
+    final _textStyle = TextStyle(
           fontSize: fontSize != null ? (fontSize! * _textScaleFactor) : (15 * _textScaleFactor),
           color: textColor ?? Colors.white,
           fontWeight: fontWeight ?? FontWeight.normal,
-        ),
+        );
+
+    final Tooltip _tooltip = Tooltip(
+      message: text ?? "",
+      child: Text(
+        text ?? "",
+        style: textStyle ?? _textStyle,
       ),
     );
+
+    return _tooltip;
   }
 }

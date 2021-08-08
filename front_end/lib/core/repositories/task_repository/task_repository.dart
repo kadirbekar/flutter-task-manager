@@ -8,8 +8,8 @@ import '../../models/response/base_model/task_model.dart';
 import '../../models/response/environment/base_environment_model.dart';
 import '../../models/response/task/added_task/added_task_model.dart';
 import '../../models/response/task/updated_task/update_task_model.dart';
-import 'ITaskRepository.dart';
-class TaskRepository with ITaskRepository {
+import 'base_task_repository.dart';
+class TaskRepository with BaseTaskRepository {
 
   late final INetworkManager _networkManager;
 

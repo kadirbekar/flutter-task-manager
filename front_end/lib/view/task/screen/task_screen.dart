@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_nodejs_task_manager/core/reusable_widgets/buttons/custom_floating_action_button.dart';
 
 import '../../../core/common_methods/display_bottom_sheet.dart';
+import '../../../core/initialize/design/base_icons.dart';
+import '../../../core/reusable_widgets/buttons/custom_floating_action_button.dart';
 import '../../../core/reusable_widgets/general_purpose_widgets/build_platform_environment_icon.dart';
 import '../../../core/reusable_widgets/texts/tab_title.dart';
 import '../../../core/reusable_widgets/texts/title_text.dart';
@@ -57,7 +58,7 @@ class _TaskPageState extends State<TaskPage> with SingleTickerProviderStateMixin
                 child: AddNewTaskBody(taskController: _taskController),
               );
             },
-            iconData: Icons.add,
+            iconData: BaseIcons.instance.add,
           ),
         ),
       ),

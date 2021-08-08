@@ -22,19 +22,23 @@ class TitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final double _textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
-    return Tooltip(
-      message: text ?? "",
-      child: Text(
-        text ?? "",
-        style: textStyle ?? TextStyle(
+    final TextStyle _textStyle = TextStyle(
           fontSize: fontSize != null ? (fontSize! * _textScaleFactor) : (17 * _textScaleFactor),
           color: textColor ?? Colors.white,
           fontWeight: fontWeight ?? FontWeight.normal
-        ),
+        );
+
+    final _tooltip = Tooltip(
+      message: text ?? "",
+      child: Text(
+        text ?? "",
+        style: textStyle ?? _textStyle,
         textAlign: textAlign ?? TextAlign.left,
       ),
     );
+
+    return _tooltip;
   }
 }

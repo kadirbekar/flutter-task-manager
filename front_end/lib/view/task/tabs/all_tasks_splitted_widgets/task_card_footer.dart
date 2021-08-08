@@ -23,7 +23,7 @@ class TaskCardFooter extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _PageSpecificText(text: "Date : ${Jiffy(task?.processDate).format("do yyyy, hh:mm")}"),
+              _PageSpecificText(text: "Date : ${Jiffy(task?.processDate).format("yyyy-MM-dd, h:mm:ss a")}"),
               _PageSpecificText(text: "Status : ${task?.status}")
             ],
           ),
@@ -38,8 +38,7 @@ class TaskCardFooter extends StatelessWidget {
               ),
               onPressed: () async {
                 _taskController.removeTheTaskFromLocalList(task!);
-                _taskController.titleController.clear();
-                _taskController.contentController.clear();
+                _taskController.clearTextEditingControllerValues();
                 await _taskController.deleteTaskById("${task?.id}");
               }
             )
@@ -65,6 +64,7 @@ class _PageSpecificText extends StatelessWidget {
       text: text,
       fontWeight: FontWeight.w600,
       textColor: Colors.white,
+      fontSize: 14,
     );
   }
 }

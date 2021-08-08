@@ -18,13 +18,12 @@ class TaskCardBody extends StatelessWidget {
     return GetBuilder(
       init: TaskController(),
       builder: (TaskController taskController) {
-        final _taskItem = taskController.allTasks.data?.firstWhere((element) => element.id == task?.id);
         return Card(
-          color: TaskCardBackGroundColor.value(_taskItem?.status ?? "ToDo"),
+          color: TaskCardBackGroundColor.value(task?.status ?? "ToDo"),
           elevation: 0,
           margin: const EdgeInsets.all(12),
           child: ContentText(
-            text: _taskItem?.content,
+            text: task?.content,
             fontSize: 17,
             textColor: Colors.white,
           ),

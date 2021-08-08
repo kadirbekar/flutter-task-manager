@@ -18,13 +18,13 @@ class EmptyBodyMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final _image = SvgPicture.asset(
+    final SvgPicture _image = SvgPicture.asset(
       imagePath!,
       height: context.height * 0.40,
       width: context.width * 0.40,
     );
 
-    final _message = TitleText(
+    final TitleText _message = TitleText(
       text: message,
       fontSize: 20,
       fontWeight: FontWeight.w600,
@@ -32,7 +32,7 @@ class EmptyBodyMessageWidget extends StatelessWidget {
       textColor: Colors.black,
     );
 
-    return Container(
+    final Container _container = Container(
       alignment: Alignment.center,
       height: context.height,
       width: context.width,
@@ -48,5 +48,7 @@ class EmptyBodyMessageWidget extends StatelessWidget {
         ),
       ),
     );
+
+    return _container;
   }
 }

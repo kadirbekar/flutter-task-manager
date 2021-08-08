@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../core/constants/design_constants.dart';
 import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/models/response/base_model/task_model.dart';
-import '../../../../../core/reusable_widgets/buttons/close_dialog_button.dart';
-import '../../../../../core/reusable_widgets/buttons/custom_text_button.dart';
 import '../../../../../core/reusable_widgets/texts/title_text.dart';
 import '../../../controller/task_controller.dart';
 import 'task_update_form.dart';
@@ -47,55 +44,11 @@ class _UpdateTaskBottomSheetBodyState extends State<UpdateTaskBottomSheetBody> {
               textColor: Colors.black,
             ),
             context.mediumHeightSpace,
-            TaskUpdateForm(taskController: _taskController),
-            context.lowHeightSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: CustomTextButton(
-                    buttonText: "ToDo",
-                    buttonBackgroundColor: DesignConstants.instance.toDoTaskColor,
-                    onPressed: () => _createUpdateTaskModel(taskStatus: "ToDo"),
-                  ),
-                ),
-                Expanded(
-                  child: CustomTextButton(
-                    buttonText: "InProgress",
-                    buttonBackgroundColor: DesignConstants.instance.inProgressTaskColor,
-                    onPressed: () => _createUpdateTaskModel(taskStatus: "InProgress"),
-                  ),
-                ),
-                Expanded(
-                  child: CustomTextButton(
-                    buttonText: "Done",
-                    buttonBackgroundColor: DesignConstants.instance.doneTaskColor,
-                    onPressed: () => _createUpdateTaskModel(taskStatus: "Done"),
-                  ),
-                )
-              ],
-            ),
-            context.lowHeightSpace,
-            const CloseDialogButton()
+            TaskUpdateForm(taskController: _taskController, task: widget.task,),
           ],
         ),
       ),
     );
-  }
-
-  Future<void> _createUpdateTaskModel({String? taskStatus}) async {
-    Navigator.of(context).pop();
-    _taskController.willBeUpdatedTask = Task(
-      id: widget.task.id,
-      title: _taskController.titleController.text,
-      content: _taskController.contentController.text,
-      processDate: DateTime.now().toString(),
-      status: taskStatus
-    );
-    _taskController.clearTextEditingControllerValues();
-    _taskController.updateTheTaskFromLocalList(_taskController.willBeUpdatedTask);
-    await _taskController.updateTaskById(_taskController.willBeUpdatedTask);
   }
 }
 

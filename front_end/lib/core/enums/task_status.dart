@@ -1,1 +1,5 @@
-enum TaskStatus {ToDo, InProgress, Done}
+enum TaskStatus {
+  ToDo,
+  InProgress,
+  Done,
+}

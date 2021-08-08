@@ -5,7 +5,7 @@ import '../../models/response/environment/base_environment_model.dart';
 import '../../models/response/task/added_task/added_task_model.dart';
 import '../../models/response/task/updated_task/update_task_model.dart';
 
-mixin ITaskRepository {
+mixin BaseTaskRepository {
   /// This method returns all tasks from database as TaskResponseModel
   Future<TaskResponseModel> fetchAllTasks();
 

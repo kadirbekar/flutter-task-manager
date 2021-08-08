@@ -8,11 +8,14 @@ class TabTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tab(
+
+    final Tab _tab = Tab(
       child: TitleText(
         text: title,
         fontWeight: FontWeight.w600,
       ),
     );
+
+    return _tab;
   }
 }
